@@ -24,7 +24,7 @@ const ERROR_UPDATE = 'Um erro ocorreu ao salvar os dados do estudante. Por favor
 const ERROR_DELETE = 'Um erro ocorreu ao excluir o estudante. Por favor tente novamente.';
 const SUCCESS_ADD = 'Novo estudante adicionado com sucesso.'
 const SUCCESS_UPDATE = 'Dados atualizados com sucesso.'
-const SUCCESS_DELETE = 'Exclusão realizada.';
+const SUCCESS_DELETE = 'Exclusão realizada de ';
 const WARNING_DELETE = 'Esta ação é irreverssível. Tem certeza de que deseja deletar '
 
 export default class StudentList extends Component {

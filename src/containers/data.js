@@ -16,7 +16,7 @@ const StudentSchema = {
     address_state: 'string',
     mother_name: 'string',
     mother_cpf: 'string',
-    preferencial_payment_date: {type: 'date'},
+    preferencial_payment_day: 'int',
   }
 };
 

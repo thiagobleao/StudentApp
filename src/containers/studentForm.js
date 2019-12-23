@@ -20,7 +20,6 @@ import FormContainer from '../components/FormContainer';
 
 //Custom tcomb
 import {CustomSelectPickerTemplate} from '../customTcomb/selectPickerTemplate';
-import {CustomDatePickerTemplate} from '../customTcomb/datePickerTemplate';
 import {CustomCEPTemplate} from '../customTcomb/cepTextInputTemplate';
 import {CustomCPFTemplate} from '../customTcomb/cpfTextInputTemplate';
 import {CustomEstadosTemplate} from '../customTcomb/selectEstadosTemplate';
@@ -35,6 +34,7 @@ import {GRADE_OPTIONS, STATE_OPTIONS} from './data';
 const ERROR_MESSAGE = '*Campo Obrigatório';
 const INVALID_CPF_MESSAGE = '*CPF Invalido';
 const INVALID_CEP_MESSAGE = '*CEP Invalido';
+const INVALID_PAYMENT_MESSAGE = '*Dia para pagamento inválido, escolha entre os dias 1 e 31';
 const Form = t.form.Form;
 
 export default class StudentForm extends Component {
@@ -54,7 +54,7 @@ export default class StudentForm extends Component {
                 address_state: this.props.activeData.address_state || '',
                 mother_name: this.props.activeData.mother_name || '',
                 mother_cpf: this.props.activeData.mother_cpf || '',
-                preferencial_payment_date: this.props.activeData.preferencial_payment_date ? new Date(this.props.activeData.preferencial_payment_date) : null     
+                preferencial_payment_day: this.props.activeData.preferencial_payment_date ? new Date(this.props.activeData.preferencial_payment_date) : null     
             },
             
             _uf: estados,
@@ -87,7 +87,7 @@ export default class StudentForm extends Component {
     //   }
 
     _onChange = (value) => {
-        console.log('value: ' + value.address_cep)
+        //console.log('value: ' + value.address_cep)
         let oStudent = {...this.state._oStudent};
         oStudent.name = value.name || '';
         oStudent.birthday = value.birthday  || null;
@@ -101,7 +101,7 @@ export default class StudentForm extends Component {
         oStudent.address_state = value.address_state  || '';
         oStudent.mother_name = value.mother_name  || '';
         oStudent.mother_cpf = value.mother_cpf  || '';
-        oStudent.preferencial_payment_date = value.preferencial_payment_date  || null;
+        oStudent.preferencial_payment_day = value.preferencial_payment_day  || null;
         this.setState({ _oStudent: oStudent, _selectedValueEstado: value.address_state })
     }
 
@@ -134,12 +134,12 @@ export default class StudentForm extends Component {
     
     
     render(){
-        console.log('GRADE_OPTIONS: ' + JSON.stringify(GRADE_OPTIONS));
-        console.log('STATE_OPTIONS: ' + JSON.stringify(STATE_OPTIONS));
-        console.log('JSON.stringify(this.state._oStudent): ' + JSON.stringify(this.state._oStudent));
-        console.log('JSON.stringify(this.state._oOriginalData): ' + JSON.stringify(this.state._oOriginalData));
+        // console.log('GRADE_OPTIONS: ' + JSON.stringify(GRADE_OPTIONS));
+        // console.log('STATE_OPTIONS: ' + JSON.stringify(STATE_OPTIONS));
+        // console.log('JSON.stringify(this.state._oStudent): ' + JSON.stringify(this.state._oStudent));
+        // console.log('JSON.stringify(this.state._oOriginalData): ' + JSON.stringify(this.state._oOriginalData));
         //const { selectedValueCidade, selectedValueEstado, uf } = this.state;
-        console.log('estados: ' + this.state._selectedValueEstado);
+        //console.log('estados: ' + this.state._selectedValueEstado);
         // if  (this.state._selectedValueEstado != '' && this.state._selectedValueEstado != null) {
         //  console.log('CITY_OPTIONS: ' + JSON.stringify(this.state._uf[this.state._selectedValueEstado].cidades));
         // }
@@ -168,7 +168,8 @@ export default class StudentForm extends Component {
                     mode:'date',
                     maximumDate: new Date(),
                     config:{
-                        format: (strDate) => utils.convertDateToString(strDate, 'DD/MM/YYYY')
+                        format: (strDate) => utils.convertDateToString(strDate, 'DD/MM/YYYY'),
+                        defaultValueText: 'Escolha a data de nascimento'
                     },
                     error: ERROR_MESSAGE
                 },
@@ -239,18 +240,17 @@ export default class StudentForm extends Component {
                     onSubmitEditing: (event) => {this.refs.form_student.getComponent('mother_cpf').refs.input.focus()},
                     error: INVALID_CPF_MESSAGE
                 },
-                preferencial_payment_date:{ 
-                    label: 'Data de Pagamento',
-                    mode:'date',
-                    maximumDate: new Date(),
-                    config:{
-                        format: (strDate) => utils.convertDateToString(strDate, 'DD/MM')
-                    },
-                    error: ERROR_MESSAGE
+                preferencial_payment_day:{ 
+                    label: 'Dia preferencial de pagamento da mensalidade',
+                    error: INVALID_PAYMENT_MESSAGE
                 }
             },
             stylesheet: stylesheet
         }
+
+        var ValidPaymentDay = t.refinement(t.Number, function (n) {
+            return n >= 1 && n <= 31;
+        });
 
         var ValidCpf = t.refinement(t.String, function (cpf) {
             cpf = cpf.replace(/[^\d]+/g,'');	
@@ -319,7 +319,7 @@ export default class StudentForm extends Component {
             address_city: CITIES,
             mother_name: t.String,
             mother_cpf: ValidCpf,
-            preferencial_payment_date: t.Date
+            preferencial_payment_day: ValidPaymentDay
         })
 
         console.log('rendering form')
