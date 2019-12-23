@@ -49,7 +49,7 @@ export default class StudentList extends Component {
         address_state: '',
         mother_name: '',
         mother_cpf: '',
-        preferencial_payment_date: '',
+        preferencial_payment_day: '',
       },
       _refreshing: false
     };
@@ -194,7 +194,7 @@ export default class StudentList extends Component {
           address_state: oData.address_state || '',
           mother_name: oData.mother_name || '',
           mother_cpf: oData.mother_cpf || '',
-          preferencial_payment_date: utils.convertDateToString(oData.preferencial_payment_date)  || '',
+          preferencial_payment_day: oData.preferencial_payment_day || '',
         }, bUpdateFlag);
 
         //Delete Action

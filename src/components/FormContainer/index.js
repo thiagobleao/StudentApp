@@ -46,7 +46,7 @@ export default class FormContainer extends Component {
                         onPress={() => this.props.onSubmit()}>
 
                         <Text style={styles.header.txtSave}>
-                            SAVE
+                            SALVAR
                         </Text>
                     </TouchableOpacity>
 

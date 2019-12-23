@@ -54,7 +54,7 @@ export default class StudentForm extends Component {
                 address_state: this.props.activeData.address_state || '',
                 mother_name: this.props.activeData.mother_name || '',
                 mother_cpf: this.props.activeData.mother_cpf || '',
-                preferencial_payment_day: this.props.activeData.preferencial_payment_date ? new Date(this.props.activeData.preferencial_payment_date) : null     
+                preferencial_payment_day: this.props.activeData.preferencial_payment_day || ''     
             },
             
             _uf: estados,
@@ -101,7 +101,7 @@ export default class StudentForm extends Component {
         oStudent.address_state = value.address_state  || '';
         oStudent.mother_name = value.mother_name  || '';
         oStudent.mother_cpf = value.mother_cpf  || '';
-        oStudent.preferencial_payment_day = value.preferencial_payment_day  || null;
+        oStudent.preferencial_payment_day = value.preferencial_payment_day  || '';
         this.setState({ _oStudent: oStudent, _selectedValueEstado: value.address_state })
     }
 

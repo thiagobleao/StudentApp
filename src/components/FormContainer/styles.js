@@ -14,7 +14,7 @@ export default {
         },
 
         left: {
-            width: 55,
+            width: 50,
             backgroundColor: 'transparent',
             justifyContent: 'center',
             alignItems: 'flex-start',
@@ -25,7 +25,7 @@ export default {
             justifyContent: 'center',
             alignItems: 'flex-end',
             paddingRight: 15,
-            width: 55,
+            width: 70,
             backgroundColor: 'transparent'
         },
 
